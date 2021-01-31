@@ -1,12 +1,17 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, Text, TouchableHighlight, TouchableOpacity, Alert } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import CircleButton from '../components/CircleButton';
-//import firebase from 'firebase';
-//import { NavigationActions, StackActions } from 'react-navigation';
-
-
-class LoginScreen extends React.Component {
-    render() {
+// import firebase from 'firebase';
+// import { NavigationActions, StackActions } from 'react-navigation';
+// eslint-disable-next-line react/prefer-stateless-function
+export default function LoginScreen() {
         return (
             <View style={styles.container}>
                 <Text　style={styles.title}>
@@ -53,7 +58,6 @@ class LoginScreen extends React.Component {
             </View>
         );
     }
-}
 
 const styles = StyleSheet.create({
     container: {
@@ -61,7 +65,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingVertical: 50,
         paddingHorizontal: 30,
-        backgroundColor: '#94d6da',
+        backgroundColor: '#f0f0f0',
     },
     input: {
         backgroundColor: '#eee',
@@ -80,5 +84,3 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
 });
-
-export default LoginScreen;

@@ -8,7 +8,7 @@ export default function CircleButton(props) {
            <TouchableOpacity style={[styles.circleButton, style]} onPress={onPress}>
                 <Text style={styles.circleButtonLabel}>{children}</Text>
             </TouchableOpacity>
-    )
+    );
 }
 
 CircleButton.propTypes = {
@@ -24,24 +24,23 @@ CircleButton.defaultProps = {
 
 const styles = StyleSheet.create({
     circleButton: {
-        backgroundColor: '#E31676',
+        backgroundColor: '#9a9a9a',
         width: 80,
-        height: 20,   
+        height: 20,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        //position: 'absolute',
-        //right: -100,
-        //bottom: -290,
+        // position: 'absolute',
+        // right: -100,
+        // bottom: -290,
         shadowColor: '#000000',
         shadowOffset: { width: 0, height: 8 },
         shadowOpacity: 0.25,
         shadowRadius: 8,
-        elevation: 8,//androidのシャドウ
+        elevation: 8,// androidのシャドウ
     },
     circleButtonLabel: {
-        color: '#ffffff',
+        color: 'black',
         fontSize: 20,
     },
 });
-

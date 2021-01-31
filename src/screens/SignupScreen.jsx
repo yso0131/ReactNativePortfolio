@@ -1,12 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, Text, TouchableHighlight, TouchableOpacity, Alert } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import CircleButton from '../components/CircleButton';
 //import firebase from 'firebase';
 //import { NavigationActions, StackActions } from 'react-navigation';
-
-
-class SignupScreen extends React.Component {
-    render() {
+export default function SignupScreen() {
         return (
             <View style={styles.container}>
                 <Text　style={styles.title}>
@@ -18,7 +22,9 @@ class SignupScreen extends React.Component {
                 value="" placeholder="Password"
                  secureTextEntry />
 
-                <CircleButton style={styles.button} onPress={() => { Alert.alert('Pressed!');}}>
+                <CircleButton style={styles.button} onPress={() => { Alert.alert('Pressed!');}}
+                            onPress={() => {navigation.navigate('Signup');}}>
+                            >
                     メンバー登録する
                 </CircleButton>
                 <Text style={styles.footerText}>
@@ -31,7 +37,6 @@ class SignupScreen extends React.Component {
             </View>
         );
     }
-}
 
 const styles = StyleSheet.create({
     container: {
@@ -39,7 +44,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingVertical: 50,
         paddingHorizontal: 30,
-        backgroundColor: '#94d6da',
+        backgroundColor: '#f0f0f0',
     },
     input: {
         backgroundColor: '#eee',
@@ -78,5 +83,3 @@ const styles = StyleSheet.create({
         fontSize: 16,
     }
 });
-
-export default SignupScreen;
