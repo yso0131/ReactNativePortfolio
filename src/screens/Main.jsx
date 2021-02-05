@@ -44,9 +44,9 @@ const data = [
 ];
 
 const chartConfig = {
-  backgroundGradientFrom: 'green',
+  backgroundGradientFrom: 'white',
   backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: 'green',
+  backgroundGradientTo: 'white',
   backgroundGradientToOpacity: 0,
   color: () => 'white',
 };
@@ -60,12 +60,11 @@ export default function Main(props) {
       <View style={styles.container}>
         <View style={styles.appBar}>
           <View style={styles.appBarPrice}>
-            <Text>xxxxxx円</Text>
+            <Text style={styles.priceBar}>xxxxxx円</Text>
           </View>
         </View>
         <View>
           <PieChart
-            style={styles.PieChartText}
             data={data}
             width={windowWidth * 1}
             height={windowHeight / 2.5}
@@ -73,17 +72,21 @@ export default function Main(props) {
             accessor="population"
             bgColor="transparent"
             paddingLeft={45}
-                        // absolute
-                    />
+          />
         </View>
         <View>
           <CircleButton
-            onPress={() => {navigation.navigate('GetStock');}}>
+            onPress={() => { navigation.navigate('GetStock'); }}>
             購入
           </CircleButton>
         </View>
         <View>
-          <Text>銘柄一覧</Text>
+          <CircleButton
+            style={{ marginTop: 30, width: 100}}
+            onPress={() => { navigation.navigate('ViewStock'); }}
+            >
+          価格変動
+        </CircleButton>
         </View>
       </View>
         );
@@ -93,10 +96,12 @@ const styles = StyleSheet.create({
     appBar: {
         width: '100%',
     },
-    PieChartText: {
-        fontSize: 30,
+    priceBar: {
+        fontSize: 48,
+        marginTop: -100,
     },
-    appBarPrice: {
+    PieChartText: {
+        fontSize: 300,
     },
     container: {
         flex: 1,

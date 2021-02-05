@@ -1,29 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
   TextInput,
   Text,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import CircleButton from '../components/CircleButton';
 // import firebase from 'firebase';
 // import { NavigationActions, StackActions } from 'react-navigation';
 // eslint-disable-next-line react/prefer-stateless-function
-export default function LoginScreen() {
-        return (
-            <View style={styles.container}>
-                <Text　style={styles.title}>
+export default function LoginScreen(props) {
+  const { navigation } = props;
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  return (
+    <View style={styles.container}>
+        <Text　style={styles.title}>
                     ログイン
                 </Text>
                 <TextInput style={styles.input}
-                value="" placeholder="Email Adress" />
+                value={email}
+                onChangeText={(text) => { setEmail(text); }}
+                placeholder="Email Adress"
+                autoCapitalize='none'
+                keyboardType="email-address"
+                textContentType="emailAddress"
+                />
                 <TextInput style={styles.input}
-                value="" placeholder="Password"
-                 secureTextEntry />
+                value={password}
+                onChangeText={(text) => { setPassword(text); }}
+                placeholder="Password"
+                secureTextEntry
+                textContentType="password"
+                />
 
-                <CircleButton style={{ 
+                <CircleButton 
+                    label="Submit"
+                        style={{ 
                         fontSize: 16, 
                         height: 48, 
                         borderRadius: 4, 
@@ -32,7 +46,11 @@ export default function LoginScreen() {
                         width: '70%',
                         alignSelf: 'center',
                         marginBottom: 24,
-                        }} onPress={() => { Alert.alert('Pressed!');}}>
+                        }} onPress={() => {navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'Home' }],
+                        });
+                    }}>
                     ログインする
                 </CircleButton>
 
@@ -45,13 +63,13 @@ export default function LoginScreen() {
                         alignItems: 'center',
                         width: '70%',
                         alignSelf: 'center',
-                        }} onPress={() => { Alert.alert('Pressed!');}}>
+                        }} onPress={() => { navigation.navigate('Signup'); }}>
                         メンバー登録する
                     </CircleButton>
                 
                 <View style={styles.signupMenu}>
                     <Text>Not Registerd?</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => {navigation.navigate('Signup'); }}>
                         <Text>Sign up here!</Text>
                     </TouchableOpacity>
                 </View>

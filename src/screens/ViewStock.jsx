@@ -2,45 +2,47 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text,
-  ScrollView,
+  Dimensions,
 } from 'react-native';
-// import { Circle } from 'react-native-svg';
+import { LineChart } from 'react-native-chart-kit';
 import CircleButton from '../components/CircleButton';
 
+const screenWidth = Dimensions.get('window').width;
+
+const chartConfig = {
+  backgroundGradientFrom: 'green',
+  backgroundGradientFromOpacity: 0,
+  backgroundGradientTo: 'green',
+  backgroundGradientToOpacity: 0,
+  color: () => 'black',
+};
+
 export default function ViewStock() {
-    return (
-      <View style={styles.container}>
-              <View style={styles.title}>
-                  <Text style={styles.titleText}>銘柄一覧</Text>
-                </View>
-              <View>
-                  <View style={styles.view}>
-                      <Text>銘柄</Text>
-                      <Text>株数</Text>
-                      <Text>金額</Text>
-                      <Text>日付</Text>
-                    </View>
-                </View>
-              <ScrollView>
-                  <View style={styles.view}>
-                      <Text>バンガードS&P500</Text>
-                      <Text>3</Text>
-                      <Text>15000円</Text>
-                      <Text>2021/1/15</Text>
-                    </View>
-                  <View style={styles.view}>
-                      <Text>仮想通貨</Text>
-                      <Text>10</Text>
-                      <Text>10000円</Text>
-                      <Text>2021/1/31</Text>
-                    </View>
-                </ScrollView>
-              <CircleButton style={{ width: '50%', height: 30, }}>削除
-                </CircleButton>
-            </View>
-    )
+  const data = {
+    labels: ['2021/01', '2021/2', '2021/3', '2021/4', '2021/5'],
+    datasets: [
+      {
+        data: [50, 60, 70, 30],
+        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+        strokeWidth: 2, // optional
+      },
+    ],
+    legend: ['Assets'], // optional
   };
+  return (
+    <View style={styles.container}>
+      <LineChart
+        data={data}
+        width={screenWidth}
+        height={256}
+        verticalLabelRotation={30}
+        chartConfig={chartConfig}
+        bezier
+        fromZero={true}
+      />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -48,23 +50,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f0f0f0',
     paddingTop: 50,
-  },
-  inner: {
-    alignItems: 'flex-start',
-  },
-  title: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 50,
-    marginTop: 20,
-  },
-  titleText: {
-    fontWeight: 'bold',
-    fontSize: 30,
-  },
-  view: {
-    flexDirection: 'row',
-    paddingHorizontal: 30,
-    borderStyle: 'solid',
   },
 });

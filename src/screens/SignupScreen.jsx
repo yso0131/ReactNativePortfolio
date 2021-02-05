@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -10,27 +10,45 @@ import {
 import CircleButton from '../components/CircleButton';
 //import firebase from 'firebase';
 //import { NavigationActions, StackActions } from 'react-navigation';
-export default function SignupScreen() {
-        return (
-            <View style={styles.container}>
+export default function SignupScreen(props) {
+  const { navigation } = props;
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+　　return (
+　　　　<View style={styles.container}>
                 <Text　style={styles.title}>
                     Sign Up
                 </Text>
                 <TextInput style={styles.input}
-                value="" placeholder="Email Adress" />
+                value={email}
+                onChangeText={(text) => { setEmail(text); }}
+                placeholder="Email Adress"
+                autoCapitalize='none'
+                keyboardType="email-address"
+                textContentType="emailAddress"
+                />
                 <TextInput style={styles.input}
-                value="" placeholder="Password"
-                 secureTextEntry />
+                value={password}
+                onChangeText={(text) => { setPassword(text); }}
+                placeholder="Password"
+                secureTextEntry
+                textContentType="password"
+                />
 
-                <CircleButton style={styles.button} onPress={() => { Alert.alert('Pressed!');}}
-                            onPress={() => {navigation.navigate('Signup');}}>
+                <CircleButton style={styles.button}
+                    onPress={() => {navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'Home'}],
+                    });   
+                }}                           
                             >
                     メンバー登録する
                 </CircleButton>
                 <Text style={styles.footerText}>
                     Already Registerd?
                 </Text>
-                <TouchableOpacity　>
+                <TouchableOpacity　
+                    onPress={() => {navigation.navigate('Login');}}>
                     <Text style={styles.footerLink} >Log in</Text>
                 </TouchableOpacity>
 
