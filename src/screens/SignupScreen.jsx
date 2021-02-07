@@ -7,14 +7,30 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import firebase from 'firebase';
 import CircleButton from '../components/CircleButton';
-//import firebase from 'firebase';
 //import { NavigationActions, StackActions } from 'react-navigation';
 export default function SignupScreen(props) {
   const { navigation } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-　　return (
+
+  function handlePress() {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const { user } = userCredential;
+        console.log(user.uid);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Home' }],
+        });
+      })
+      .catch((error) => {
+        console.log(error.code, error.message);
+        Alert.alert(error.code);
+      });
+  }
+  return (
 　　　　<View style={styles.container}>
                 <Text　style={styles.title}>
                     Sign Up
@@ -36,12 +52,7 @@ export default function SignupScreen(props) {
                 />
 
                 <CircleButton style={styles.button}
-                    onPress={() => {navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'Home'}],
-                    });   
-                }}                           
-                            >
+                    onPress={handlePress}>
                     メンバー登録する
                 </CircleButton>
                 <Text style={styles.footerText}>
@@ -78,7 +89,6 @@ const styles = StyleSheet.create({
         marginBottom: 24,
     },
     button: {
-        backgroundColor: '#E31676',
         height: 48,
         borderRadius: 4,
         justifyContent: 'center',

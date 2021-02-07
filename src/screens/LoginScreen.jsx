@@ -5,7 +5,9 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
+import firebase from 'firebase';
 import CircleButton from '../components/CircleButton';
 // import firebase from 'firebase';
 // import { NavigationActions, StackActions } from 'react-navigation';
@@ -14,6 +16,22 @@ export default function LoginScreen(props) {
   const { navigation } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  function handlePress() {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const { user } = userCredential;
+        console.log(user.uid);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Home' }],
+        });
+      })
+      .catch((error) => {
+        Alert.alert(error.code);
+      });
+  }
+
   return (
     <View style={styles.container}>
         <Text　style={styles.title}>
@@ -46,11 +64,7 @@ export default function LoginScreen(props) {
                         width: '70%',
                         alignSelf: 'center',
                         marginBottom: 24,
-                        }} onPress={() => {navigation.reset({
-                            index: 0,
-                            routes: [{ name: 'Home' }],
-                        });
-                    }}>
+                        }} onPress={handlePress}>
                     ログインする
                 </CircleButton>
 
