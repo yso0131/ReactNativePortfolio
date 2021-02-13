@@ -7,7 +7,7 @@ import ViewStock from './src/screens/ViewStock';
 import GetStock from './src/screens/GetStock';
 import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
-import Empty from './src/screens/Empty';
+import BuyOut from './src/screens/BuyOut';
 import Sell from './src/screens/Sell';
 import SellComp from './src/screens/SellComp';
 import SoldOut from './src/screens/SoldOut';
@@ -38,7 +38,7 @@ export default function App() {
         <Stack.Screen name="Home" component={Main} />
         <Stack.Screen name="ViewStock" component={ViewStock} />
         <Stack.Screen name="GetStock" component={GetStock} />
-        <Stack.Screen name="Empty" component={Empty} />
+        <Stack.Screen name="BuyOut" component={BuyOut} />
         <Stack.Screen name="Sell" component={Sell} />
         <Stack.Screen name="SellComp" component={SellComp} />
         <Stack.Screen name="SoldOut" component={SoldOut} />

@@ -27,7 +27,7 @@ export default function GetStock(props) {
     })
       .then((docRef) => {
         console.log('Created!', docRef.id);
-        navigation.navigate('Empty');
+        navigation.navigate('BuyOut');
       })
       .catch((error) => {
         console.log('Error', error);

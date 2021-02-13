@@ -7,7 +7,7 @@ import {
 import CircleButton from '../components/CircleButton';
 // import firebase from 'firebase';
 
-export default function Empty(props) {
+export default function BuyOut(props) {
   const { navigation } = props;
   return (
     <View style={styles.container}>
