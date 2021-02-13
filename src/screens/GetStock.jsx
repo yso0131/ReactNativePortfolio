@@ -4,9 +4,9 @@ import {
   View,
   Text,
   TextInput,
-  KeyboardAvoidingView,
 } from 'react-native';
 import firebase from 'firebase';
+import KeyboardSafeView from '../components/KeyboadSafeView';
 import CircleButton from '../components/CircleButton';
 
 export default function GetStock(props) {
@@ -27,72 +27,89 @@ export default function GetStock(props) {
     })
       .then((docRef) => {
         console.log('Created!', docRef.id);
-        navigation.navigate('Home');
+        navigation.navigate('Empty');
       })
       .catch((error) => {
         console.log('Error', error);
       });
   }
   return (
-    <View>
-      <View style={styles.container}>
-        <View style={styles.title}>
-          <Text style={styles.titleText}>購入銘柄</Text>
-        </View>
-        <KeyboardAvoidingView style={styles.stockDetail}>
+    <KeyboardSafeView
+      style={styles.stockDetail}
+      bahavior="position"
+    >
+      <View>
+        <View style={styles.container}>
+          <View style={styles.title}>
+            <Text style={styles.titleText}>購入銘柄</Text>
+          </View>
           <TextInput
+            style={styles.inputText}
             value={name}
             placeholder="株名"
             onChangeText={(text) => { setName(text); }}
             autoFocus
-            />
+          />
           <TextInput
+            style={styles.inputText}
             value={stockAmount}
+            keyboardType="numeric"
             placeholder="株数"
             onChangeText={(text) => { setStockAmount(text); }}
-            />
+          />
           <TextInput
+            style={styles.inputText}
             value={population}
+            keyboardType="numeric"
             placeholder="購入額"
             onChangeText={(text) => { setPopulation(text); }}
-            />
-        </KeyboardAvoidingView>
-        <View>
-          <CircleButton
-            style={{
-              position: 'absolute',
-              right: -100,
-              bottom: -300,
-            }}
-            onPress={handlePress}
-         >
-            購入
-          </CircleButton>
+          />
+          <View>
+            <CircleButton
+              style={styles.fixButton}
+              onPress={handlePress}
+            >
+              購入
+            </CircleButton>
+          </View>
         </View>
       </View>
-    </View>
+    </KeyboardSafeView>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingVertical: 60,
-    position: 'relative',
+  },
+  title: {
+    marginBottom: 30,
   },
   stockDetail: {
+    backgroundColor: '#f0f0f0',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 60,
+    position: 'relative',
     flex: 1,
-    alignItems: 'flex-start',
-    paddingTop: 50,
+    // paddingTop: 50,
     // backgroundColor: 'black',
-    position: 'absolute',
+    // position: 'absolute',
     marginBottom: 0,
   },
   titleText: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 32,
+  },
+  inputText: {
+    fontSize: 24,
+  },
+  fixButton: {
+    position: 'absolute',
+    right: -100,
+    bottom: -200,
+    width: '70%',
+    paddingVertical: 24,
   },
 });

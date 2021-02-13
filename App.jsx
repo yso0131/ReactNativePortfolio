@@ -7,6 +7,10 @@ import ViewStock from './src/screens/ViewStock';
 import GetStock from './src/screens/GetStock';
 import LoginScreen from './src/screens/LoginScreen';
 import SignupScreen from './src/screens/SignupScreen';
+import Empty from './src/screens/Empty';
+import Sell from './src/screens/Sell';
+import SellComp from './src/screens/SellComp';
+import SoldOut from './src/screens/SoldOut';
 import { firebaseConfig } from './env';
 
 require('firebase/firestore');
@@ -20,7 +24,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="SellOut"
         screenOptions={{
           headerStyle: { backgroundColor: '#c0c0c0' },
           headerTitleStyle: { color: '#ffffff' },
@@ -34,6 +38,10 @@ export default function App() {
         <Stack.Screen name="Home" component={Main} />
         <Stack.Screen name="ViewStock" component={ViewStock} />
         <Stack.Screen name="GetStock" component={GetStock} />
+        <Stack.Screen name="Empty" component={Empty} />
+        <Stack.Screen name="Sell" component={Sell} />
+        <Stack.Screen name="SellComp" component={SellComp} />
+        <Stack.Screen name="SoldOut" component={SoldOut} />
         <Stack.Screen
           name="Login"
           component={LoginScreen}
