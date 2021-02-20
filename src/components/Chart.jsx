@@ -8,21 +8,13 @@ import {
 } from 'react-native';
 // import firebase from 'firebase';
 import { PieChart } from 'react-native-chart-kit';
+import {
+  shape, string, instanceOf, arrayOf,
+} from 'prop-types';
 import CircleButton from './CircleButton';
-// import { shape, string, instanceOf } from 'prop-types';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
-const data = [
-  {
-    name: 'バンガードS&P500',
-    population: 200000,
-    color: 'hsla(0, 100%,　50%, .5)',
-    legendFontColor: 'black', // ラベルの色
-    legendFontSize: 8, // ラベルサイズ
-  }, //  populationは計算して割合を算出
-];
 
 const chartConfig = {
   backgroundGradientFrom: 'white',
@@ -32,8 +24,17 @@ const chartConfig = {
   color: () => 'white',
 };
 
-export default function Chart() {
-  // const { memos } = props;
+export default function Chart(props) {
+  const { memos } = props;
+  const data = [
+    {
+      name: { memos },
+      population: 200000,
+      color: 'hsla(0, 100%,　50%, .5)',
+      legendFontColor: 'black', // ラベルの色
+      legendFontSize: 8, // ラベルサイズ
+    }, //  populationは計算して割合を算出
+  ];
   const navigation = useNavigation();
   return (
   // eslint-disable-next-line react/jsx-filename-extension
@@ -46,6 +47,9 @@ export default function Chart() {
         </View>
       </View>
       <View>
+        {memos.map((memo) => (
+          console.log(memo.name)
+        ))}
         <PieChart
           data={data}
           width={windowWidth * 1}
@@ -73,15 +77,15 @@ export default function Chart() {
     </View>
   );
 }
-/* Chart.propTypes = {
-  memos: shape({
+Chart.propTypes = {
+  memos: arrayOf(shape({
     id: string,
     name: string,
     stockAmount: string,
     population: string,
     updatedAt: instanceOf(Date),
-  }).isRequired,
-}; */
+  })).isRequired,
+};
 const styles = StyleSheet.create({
   appBar: {
     width: '100%',
