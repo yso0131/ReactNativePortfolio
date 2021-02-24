@@ -1,8 +1,6 @@
 /* eslint-disable indent */
 import React, { useEffect, useState } from 'react';
-// import {} from 'react-native';
 import firebase from 'firebase';
-// import { useIsFocused } from '@react-navigation/native';
 import Chart from '../components/Chart';
 import LogoutButton from '../components/LogoutButton';
 
@@ -25,7 +23,6 @@ export default function Main(props) {
       unsubscribe = ref.onSnapshot((snapshot) => {
         const userMemos = [];
         snapshot.forEach((doc) => {
-            console.log(doc.id, doc.data());
             const data = doc.data();
             userMemos.push({
               id: doc.id,

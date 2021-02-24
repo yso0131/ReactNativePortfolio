@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { shape, string } from 'prop-types';
 import {
   StyleSheet,
   View,
@@ -10,23 +11,40 @@ import KeyboardSafeView from '../components/KeyboadSafeView';
 import CircleButton from '../components/CircleButton';
 
 export default function SellComp(props) {
-  const { navigation } = props;
-  const [name, setName] = useState('');
+  const { navigation, route } = props;
+  const { id } = route.params;
+  console.log(id);
+  const [memo, setMemo] = useState(null);
+  // const [name, setName] = useState('');
   const [stockAmount, setStockAmount] = useState('');
   const [population, setPopulation] = useState('');
 
-  function handlePress() {
-    const { currentUser } = firebase.auth();
+  useEffect(() => {
     const db = firebase.firestore();
-    const ref = db.collection(`users/${currentUser.uid}/memos`);// user毎の情報を受け取れる
+    const ref = db.collection('/users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos').doc(id);
+    const unsubscribe = ref.onSnapshot((doc) => {
+      console.log(doc.id, doc.data());
+      const data = doc.data();
+      setMemo({
+        id: doc.id,
+        name: data.name,
+        stockAmount: data.stockAmount,
+        population: data.population,
+        updatedAt: data.updatedAt.toDate(),
+      });
+    });
+    return unsubscribe;
+  }, []);
+
+  function handlePress() { // deleteの処理に変更
+    const db = firebase.firestore();
+    const ref = db.collection('users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos');// user毎の情報を受け取れる
     ref.add({
-      name,
       stockAmount,
       population,
       updatedAt: new Date(),
     })
-      .then((docRef) => {
-        console.log('Created!', docRef.id);
+      .then(() => {
         navigation.navigate('SoldOut');
       })
       .catch((error) => {
@@ -42,14 +60,8 @@ export default function SellComp(props) {
         <View style={styles.container}>
           <View style={styles.title}>
             <Text style={styles.titleText}>売却</Text>
+            <Text style={styles.StockName}>{memo && memo.name}</Text>
           </View>
-          <TextInput
-            style={styles.inputText}
-            value={name}
-            placeholder="株名"
-            onChangeText={(text) => { setName(text); }}
-            autoFocus
-          />
           <TextInput
             style={styles.inputText}
             value={stockAmount}
@@ -79,12 +91,19 @@ export default function SellComp(props) {
   );
 }
 
+SellComp.propTypes = {
+  route: shape({
+    params: shape({ id: string }),
+  }).isRequired,
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   title: {
     marginBottom: 30,
+    alignItems: 'center',
   },
   stockDetail: {
     backgroundColor: '#f0f0f0',
@@ -101,6 +120,12 @@ const styles = StyleSheet.create({
   titleText: {
     fontWeight: 'bold',
     fontSize: 32,
+  },
+  StockName: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    alignItems: 'center',
+    color: '#3b3b3b',
   },
   inputText: {
     fontSize: 24,

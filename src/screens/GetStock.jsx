@@ -25,8 +25,7 @@ export default function GetStock(props) {
       population,
       updatedAt: new Date(),
     })
-      .then((docRef) => {
-        console.log('Created!', docRef.id);
+      .then(() => {
         navigation.navigate('BuyOut');
       })
       .catch((error) => {
@@ -52,17 +51,17 @@ export default function GetStock(props) {
           />
           <TextInput
             style={styles.inputText}
-            value={stockAmount}
+            value={stockAmount.toString()}
             keyboardType="numeric"
             placeholder="株数"
-            onChangeText={(text) => { setStockAmount(text); }}
+            onChangeText={(str) => { setStockAmount(str); }}
           />
           <TextInput
             style={styles.inputText}
-            value={population}
+            value={population.toString()}
             keyboardType="numeric"
             placeholder="購入額"
-            onChangeText={(text) => { setPopulation(text); }}
+            onChangeText={(str) => { setPopulation(str); }}
           />
           <View>
             <CircleButton

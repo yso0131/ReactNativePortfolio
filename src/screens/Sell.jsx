@@ -1,96 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
   Text,
-  TextInput,
+  TouchableOpacity,
+  FlatList,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import firebase from 'firebase';
-import KeyboardSafeView from '../components/KeyboadSafeView';
-import CircleButton from '../components/CircleButton';
 
-export default function Sell(props) {
-  const { navigation } = props;
-  const [name, setName] = useState('');
-  const [stockAmount, setStockAmount] = useState('');
-  const [population, setPopulation] = useState('');
-
-  function handlePress() {
-    const { currentUser } = firebase.auth();
-    const db = firebase.firestore();
-    const ref = db.collection(`users/${currentUser.uid}/memos`);// user毎の情報を受け取れる
-    ref.add({
-      name,
-      stockAmount,
-      population,
-      updatedAt: new Date(),
-    })
-      .then((docRef) => {
-        console.log('Created!', docRef.id);
-        navigation.navigate('SellComp');
-      })
-      .catch((error) => {
-        console.log('Error', error);
-      });
+export default function Sell() {
+  const navigation = useNavigation();
+  const [memos, setMemos] = useState([]);
+  function renderItem({ item }) {
+    return (
+      <View>
+        <TouchableOpacity
+          onPress={() => { navigation.navigate('SellComp', { id: item.id }); }}
+        >
+          <Text style={styles.stockText} numberOfLines={1}>{item.name}</Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
+
+  useEffect(() => {
+    const currentUser = firebase.auth();
+    const db = firebase.firestore();
+    let unsubscribe = () => {};
+    if (currentUser) {
+      const ref = db.collection('/users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos').orderBy('updatedAt', 'desc');
+      // const ref = db.collection(`/users/${currentUser.uid}/memos`);
+      unsubscribe = ref.onSnapshot((snapshot) => {
+        const userMemos = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          userMemos.push({
+            id: doc.id,
+            name: data.name,
+            stockAmount: data.stockAmount,
+            population: data.population,
+            updatedAt: data.updatedAt.toDate(),
+          });
+        });
+        setMemos(userMemos);
+      }, (error) => {
+        console.log(error);
+      });
+    }
+    return unsubscribe;
+  }, []);
   return (
-    <KeyboardSafeView
-      style={styles.stockDetail}
-      bahavior="position"
-    >
+    <View>
       <View>
         <View style={styles.container}>
           <View style={styles.title}>
             <Text style={styles.titleText}>売却一覧</Text>
           </View>
           <View style={styles.stockView}>
-            <Text>ここに一覧表示</Text>
-
-            <CircleButton
-              style={styles.fixButton}
-              onPress={handlePress}
-            >
-              選択
-            </CircleButton>
+            <FlatList
+              style={styles.list}
+              data={memos}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
           </View>
         </View>
       </View>
-    </KeyboardSafeView>
-
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: '100%',
+    paddingBottom: 100,
   },
   title: {
+    marginTop: 30,
     marginBottom: 30,
-  },
-  stockDetail: {
-    backgroundColor: '#f0f0f0',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 60,
-    position: 'relative',
-    flex: 1,
-    // paddingTop: 50,
-    // backgroundColor: 'black',
-    // position: 'absolute',
-    marginBottom: 0,
+  },
+  stockText: {
+    fontSize: 32,
   },
   titleText: {
     fontWeight: 'bold',
     fontSize: 32,
-  },
-  inputText: {
-    fontSize: 24,
-  },
-  fixButton: {
-    position: 'absolute',
-    right: -100,
-    bottom: -200,
-    width: '70%',
-    paddingVertical: 24,
   },
 });

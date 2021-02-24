@@ -28,7 +28,7 @@ export default function Chart(props) {
   const { memos } = props;
   const data = [
     {
-      name: { memos },
+      name: [memos.name],
       population: 200000,
       color: 'hsla(0, 100%,　50%, .5)',
       legendFontColor: 'black', // ラベルの色
@@ -47,9 +47,6 @@ export default function Chart(props) {
         </View>
       </View>
       <View>
-        {memos.map((memo) => (
-          console.log(memo.name)
-        ))}
         <PieChart
           data={data}
           width={windowWidth * 1}
