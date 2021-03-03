@@ -21,8 +21,8 @@ export default function Sell() {
               {
                 id: item.id,
                 name: item.name,
-                stockAmount: item.stockAmount,
-                population: item.population,
+                stockAmount: Number(item.stockAmount),
+                population: Number(item.population),
               });
           }}
         >

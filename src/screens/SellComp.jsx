@@ -40,8 +40,8 @@ export default function SellComp(props) {
     const db = firebase.firestore();
     const ref = db.collection('users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos');// user毎の情報を受け取れる
     ref.add({
-      stockAmount,
-      population,
+      stockAmount: toString(),
+      population: toString(),
       updatedAt: new Date(),
     })
       .then(() => {

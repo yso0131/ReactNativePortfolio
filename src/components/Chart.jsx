@@ -27,10 +27,11 @@ const chartConfig = {
 
 export default function Chart(props) {
   const { memos } = props;
-  let data = [
+  console.log(memos);
+  const data = [
     {
-      name: [memos.name],
-      population: 200000,
+      name: 'aaaa',
+      population: 9000,
       color: 'hsla(0, 100%,　50%, .5)',
       legendFontColor: 'black', // ラベルの色
       legendFontSize: 8, // ラベルサイズ
