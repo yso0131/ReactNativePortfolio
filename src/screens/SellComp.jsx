@@ -10,6 +10,7 @@ import {
 import firebase from 'firebase';
 import KeyboardSafeView from '../components/KeyboadSafeView';
 import CircleButton from '../components/CircleButton';
+import { NavigationHelpersContext } from '@react-navigation/native';
 
 export default function SellComp(props) {
   const { navigation, route } = props;
@@ -36,20 +37,23 @@ export default function SellComp(props) {
       });
   }
 
-  function handlePress() { // deleteの処理に変更
+  function deleteMemo() { // deleteの処理に変更
     const db = firebase.firestore();
-    const ref = db.collection('users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos');// user毎の情報を受け取れる
-    ref.add({
-      stockAmount: toString(),
-      population: toString(),
-      updatedAt: new Date(),
-    })
-      .then(() => {
-        navigation.navigate('SoldOut');
-      })
-      .catch((error) => {
-        console.log('Error', error);
-      });
+    const ref = db.collection('users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos').doc(id);
+    Alert.alert('すべて売却します', 'よろしいですか？', [
+      {
+        text: 'キャンセル',
+        onPress: () => {},
+      },
+      {
+        text: '売却する',
+        style: 'destructive',
+        onPress: () => {
+          ref.delete().then(() => { navigation.goBack(); })
+            .catch(() => { Alert.alert('売却に失敗しました'); });
+        },
+      },
+    ]);
   }
   return (
     <KeyboardSafeView
@@ -90,7 +94,7 @@ export default function SellComp(props) {
             </CircleButton>
             <CircleButton
               style={styles.secButton}
-              onPress={handlePress}
+              onPress={() => { deleteMemo(); }}
             >
               すべて売却
             </CircleButton>
