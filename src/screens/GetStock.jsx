@@ -12,8 +12,8 @@ import CircleButton from '../components/CircleButton';
 export default function GetStock(props) {
   const { navigation } = props;
   const [name, setName] = useState('');
-  const [stockAmount, setStockAmount] = useState('');
-  const [population, setPopulation] = useState('');
+  const [stockAmount, setStockAmount] = useState();
+  const [population, setPopulation] = useState();
 
   function handlePress() {
     const { currentUser } = firebase.auth();
@@ -51,17 +51,23 @@ export default function GetStock(props) {
           />
           <TextInput
             style={styles.inputText}
-            value={stockAmount.toString()}
+            value={stockAmount}
             keyboardType="numeric"
             placeholder="株数"
-            onChangeText={(str) => { setStockAmount(str); }}
+            onChangeText={(text) => {
+              const value = Number(text);
+              setStockAmount(value);
+            }}
           />
           <TextInput
             style={styles.inputText}
-            value={population.toString()}
+            value={population}
             keyboardType="numeric"
             placeholder="購入額"
-            onChangeText={(str) => { setPopulation(str); }}
+            onChangeText={(text) => {
+              const value1 = Number(text);
+              setPopulation(value1);
+            }}
           />
           <View>
             <CircleButton

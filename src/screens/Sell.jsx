@@ -16,7 +16,15 @@ export default function Sell() {
     return (
       <View>
         <TouchableOpacity
-          onPress={() => { navigation.navigate('SellComp', { id: item.id }); }}
+          onPress={() => {
+            navigation.navigate('SellComp',
+              {
+                id: item.id,
+                name: item.name,
+                stockAmount: item.stockAmount,
+                population: item.population,
+              });
+          }}
         >
           <Text style={styles.stockText} numberOfLines={1}>{item.name}</Text>
         </TouchableOpacity>
@@ -55,7 +63,7 @@ export default function Sell() {
       <View>
         <View style={styles.container}>
           <View style={styles.title}>
-            <Text style={styles.titleText}>売却一覧</Text>
+            <Text style={styles.titleText}>一覧</Text>
           </View>
           <View style={styles.stockView}>
             <FlatList

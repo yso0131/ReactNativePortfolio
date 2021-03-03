@@ -14,8 +14,8 @@ import CircleButton from '../components/CircleButton';
 // eslint-disable-next-line react/prefer-stateless-function
 export default function LoginScreen(props) {
   const { navigation } = props;
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('user1@example.com');
+  const [password, setPassword] = useState('password');
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {

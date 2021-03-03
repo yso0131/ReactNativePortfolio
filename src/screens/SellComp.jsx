@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { shape, string } from 'prop-types';
+import React, { useState } from 'react';
+import { shape, string, number } from 'prop-types';
 import {
   StyleSheet,
   View,
   Text,
   TextInput,
+  Alert,
 } from 'react-native';
 import firebase from 'firebase';
 import KeyboardSafeView from '../components/KeyboadSafeView';
@@ -12,29 +13,28 @@ import CircleButton from '../components/CircleButton';
 
 export default function SellComp(props) {
   const { navigation, route } = props;
-  const { id } = route.params;
-  console.log(id);
-  const [memo, setMemo] = useState(null);
-  // const [name, setName] = useState('');
-  const [stockAmount, setStockAmount] = useState('');
-  const [population, setPopulation] = useState('');
+  const {
+    id, name, stockAmount, population,
+  } = route.params;
+  const [stockAm, setStockAm] = useState(stockAmount.toString());
+  const [popula, setPopula] = useState(population.toString());
 
-  useEffect(() => {
+  function handlePressEdit() {
     const db = firebase.firestore();
-    const ref = db.collection('/users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos').doc(id);
-    const unsubscribe = ref.onSnapshot((doc) => {
-      console.log(doc.id, doc.data());
-      const data = doc.data();
-      setMemo({
-        id: doc.id,
-        name: data.name,
-        stockAmount: data.stockAmount,
-        population: data.population,
-        updatedAt: data.updatedAt.toDate(),
+    const ref = db.collection('users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos').doc(id);
+    ref.set({
+      name,
+      stockAmount: stockAm,
+      population: popula,
+      updatedAt: new Date(),
+    })
+      .then(() => {
+        navigation.goBack();
+      })
+      .catch((error) => {
+        Alert.alert(error.code);
       });
-    });
-    return unsubscribe;
-  }, []);
+  }
 
   function handlePress() { // deleteの処理に変更
     const db = firebase.firestore();
@@ -59,29 +59,40 @@ export default function SellComp(props) {
       <View>
         <View style={styles.container}>
           <View style={styles.title}>
-            <Text style={styles.titleText}>売却</Text>
-            <Text style={styles.StockName}>{memo && memo.name}</Text>
+            <Text style={styles.StockName}>{name}</Text>
           </View>
           <TextInput
             style={styles.inputText}
-            value={stockAmount}
+            value={stockAm}
             keyboardType="numeric"
-            placeholder="株数"
-            onChangeText={(text) => { setStockAmount(text); }}
+            placeholder="変更後の株数"
+            onChangeText={(text) => {
+              const elvalue = Number(text);
+              setStockAm(elvalue);
+            }}
           />
           <TextInput
             style={styles.inputText}
-            value={population}
+            value={popula}
             keyboardType="numeric"
-            placeholder="売却額"
-            onChangeText={(text) => { setPopulation(text); }}
+            placeholder="変更後の売却額"
+            onChangeText={(text) => {
+              const value1 = Number(text);
+              setPopula(value1);
+            }}
           />
           <View>
             <CircleButton
               style={styles.fixButton}
+              onPress={handlePressEdit}
+            >
+              編集
+            </CircleButton>
+            <CircleButton
+              style={styles.secButton}
               onPress={handlePress}
             >
-              売却
+              すべて売却
             </CircleButton>
           </View>
         </View>
@@ -93,7 +104,9 @@ export default function SellComp(props) {
 
 SellComp.propTypes = {
   route: shape({
-    params: shape({ id: string }),
+    params: shape({
+      id: string, name: string, stockAmount: number, population: number,
+    }),
   }).isRequired,
 };
 
@@ -117,13 +130,9 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     marginBottom: 0,
   },
-  titleText: {
-    fontWeight: 'bold',
-    fontSize: 32,
-  },
   StockName: {
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 32,
     alignItems: 'center',
     color: '#3b3b3b',
   },
@@ -133,8 +142,15 @@ const styles = StyleSheet.create({
   fixButton: {
     position: 'absolute',
     right: -100,
-    bottom: -200,
+    bottom: -80,
     width: '70%',
+    paddingVertical: 24,
+  },
+  secButton: {
+    position: 'absolute',
+    right: 0,
+    bottom: -150,
+    width: '100%',
     paddingVertical: 24,
   },
 });

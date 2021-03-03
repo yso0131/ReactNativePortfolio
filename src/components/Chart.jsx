@@ -9,9 +9,10 @@ import {
 // import firebase from 'firebase';
 import { PieChart } from 'react-native-chart-kit';
 import {
-  shape, string, instanceOf, arrayOf,
+  shape, string, instanceOf, arrayOf, number,
 } from 'prop-types';
 import CircleButton from './CircleButton';
+// import Culuculate from './Culuculate';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -26,7 +27,7 @@ const chartConfig = {
 
 export default function Chart(props) {
   const { memos } = props;
-  const data = [
+  let data = [
     {
       name: [memos.name],
       population: 200000,
@@ -43,7 +44,7 @@ export default function Chart(props) {
     <View style={styles.container}>
       <View style={styles.appBar}>
         <View style={styles.appBarPrice}>
-          <Text style={styles.priceBar}>xxxxxx円</Text>
+          <Text style={styles.priceBar}>円</Text>
         </View>
       </View>
       <View>
@@ -68,7 +69,7 @@ export default function Chart(props) {
           style={{ marginTop: 30, width: '70%', paddingVertical: 24 }}
           onPress={() => { navigation.navigate('Sell'); }}
         >
-          売却
+          売却＆調整
         </CircleButton>
       </View>
     </View>
@@ -78,8 +79,8 @@ Chart.propTypes = {
   memos: arrayOf(shape({
     id: string,
     name: string,
-    stockAmount: string,
-    population: string,
+    stockAmount: number,
+    population: number,
     updatedAt: instanceOf(Date),
   })).isRequired,
 };
