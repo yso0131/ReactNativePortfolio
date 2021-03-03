@@ -12,8 +12,8 @@ import CircleButton from '../components/CircleButton';
 export default function GetStock(props) {
   const { navigation } = props;
   const [name, setName] = useState('');
-  const [stockAmount, setStockAmount] = useState();
-  const [population, setPopulation] = useState();
+  const [stockAmount, setStockAmount] = useState('');
+  const [population, setPopulation] = useState('');
 
   function handlePress() {
     const db = firebase.firestore();

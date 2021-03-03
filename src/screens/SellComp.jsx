@@ -10,7 +10,6 @@ import {
 import firebase from 'firebase';
 import KeyboardSafeView from '../components/KeyboadSafeView';
 import CircleButton from '../components/CircleButton';
-import { NavigationHelpersContext } from '@react-navigation/native';
 
 export default function SellComp(props) {
   const { navigation, route } = props;
@@ -25,8 +24,8 @@ export default function SellComp(props) {
     const ref = db.collection('users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos').doc(id);
     ref.set({
       name,
-      stockAmount: stockAm,
-      population: popula,
+      stockAmount: Number(stockAm),
+      population: Number(popula),
       updatedAt: new Date(),
     })
       .then(() => {
@@ -90,13 +89,13 @@ export default function SellComp(props) {
               style={styles.fixButton}
               onPress={handlePressEdit}
             >
-              編集
+              調整
             </CircleButton>
             <CircleButton
               style={styles.secButton}
               onPress={() => { deleteMemo(); }}
             >
-              すべて売却
+              売却
             </CircleButton>
           </View>
         </View>

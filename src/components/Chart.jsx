@@ -27,7 +27,13 @@ const chartConfig = {
 
 export default function Chart(props) {
   const { memos } = props;
-  console.log(memos);
+  const datas = memos;
+  let data1 = datas.map((memo) => memo.name);
+  console.log(data1);
+
+  const amounts = datas.map((money) => money.population);
+  const total = amounts.reduce((sum, element) => sum + element, 0);
+
   const data = [
     {
       name: 'aaaa',
@@ -45,7 +51,10 @@ export default function Chart(props) {
     <View style={styles.container}>
       <View style={styles.appBar}>
         <View style={styles.appBarPrice}>
-          <Text style={styles.priceBar}>円</Text>
+          <Text style={styles.priceBar}>
+            {total.toString()}
+            円
+          </Text>
         </View>
       </View>
       <View>
