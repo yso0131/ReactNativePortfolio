@@ -12,7 +12,6 @@ import {
   shape, string, instanceOf, arrayOf, number,
 } from 'prop-types';
 import CircleButton from './CircleButton';
-// import Culuculate from './Culuculate';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -28,21 +27,24 @@ const chartConfig = {
 export default function Chart(props) {
   const { memos } = props;
   const datas = memos;
-  let data1 = datas.map((memo) => memo.name);
-  console.log(data1);
-
-  const amounts = datas.map((money) => money.population);
-  const total = amounts.reduce((sum, element) => sum + element, 0);
-
-  const data = [
+  // const hue = 360 * Math.random;
+  const color = 'hsl(360 * Math.random, 100%, 50%)';
+  const data = datas.map((memo) => (
     {
-      name: 'aaaa',
-      population: 9000,
-      color: 'hsla(0, 100%,　50%, .5)',
-      legendFontColor: 'black', // ラベルの色
-      legendFontSize: 8, // ラベルサイズ
-    }, //  populationは計算して割合を算出
-  ];
+      name: memo.name,
+      population: memo.population,
+      color: { color },
+      // color: 'hsla(0, 100%,　50%, .5)',
+      legendFontColor: 'black',
+      legendFontSize: 8,
+    }
+  ));
+
+  const allAmount = datas.map((money) => (
+    money.population
+  ));
+  const total = allAmount.reduce((sum, element) => sum + element, 0);
+
   const navigation = useNavigation();
   return (
   // eslint-disable-next-line react/jsx-filename-extension
