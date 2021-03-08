@@ -27,16 +27,22 @@ const chartConfig = {
 export default function Chart(props) {
   const { memos } = props;
   const datas = memos;
-  const hue = Math.round(Math.random() * 366);
-  const color = `hsla(${hue}, 100%, 50%, .5)`;
+  // const hue = Math.round(Math.random() * 366);
+  function ChangeColor() {
+    const hue = Math.round(Math.random() * 366);
+    const color = `hsla(${hue}, 100%, 50%, .5)`;
+    return (
+      color
+    );
+  }
+  // const color = `hsla(${hue}, 100%, 50%, .5)`;
   const data = datas.map((memo) => (
     {
       name: memo.name,
       population: memo.population,
-      color,
-      // color: 'hsla(0, 100%, 50%, .5)',
+      color: ChangeColor(),
       legendFontColor: 'black',
-      legendFontSize: 8,
+      legendFontSize: 10,
     }
   ));
   const allAmount = datas.map((money) => (
