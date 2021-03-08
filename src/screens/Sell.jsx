@@ -33,11 +33,11 @@ export default function Sell() {
   }
 
   useEffect(() => {
-    const currentUser = firebase.auth();
+    const { currentUser } = firebase.auth();
     const db = firebase.firestore();
     let unsubscribe = () => {};
     if (currentUser) {
-      const ref = db.collection('/users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos').orderBy('updatedAt', 'desc');
+      const ref = db.collection(`/users/${currentUser.uid}/memos`).orderBy('updatedAt', 'desc');
       // const ref = db.collection(`/users/${currentUser.uid}/memos`);
       unsubscribe = ref.onSnapshot((snapshot) => {
         const userMemos = [];

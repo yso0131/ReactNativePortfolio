@@ -27,19 +27,18 @@ const chartConfig = {
 export default function Chart(props) {
   const { memos } = props;
   const datas = memos;
-  // const hue = 360 * Math.random;
-  const color = 'hsl(360 * Math.random, 100%, 50%)';
+  const hue = Math.round(Math.random() * 366);
+  const color = `hsla(${hue}, 100%, 50%, .5)`;
   const data = datas.map((memo) => (
     {
       name: memo.name,
       population: memo.population,
-      color: { color },
-      // color: 'hsla(0, 100%,　50%, .5)',
+      color,
+      // color: 'hsla(0, 100%, 50%, .5)',
       legendFontColor: 'black',
       legendFontSize: 8,
     }
   ));
-
   const allAmount = datas.map((money) => (
     money.population
   ));

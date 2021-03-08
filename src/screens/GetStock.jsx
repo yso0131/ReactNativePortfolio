@@ -16,8 +16,9 @@ export default function GetStock(props) {
   const [population, setPopulation] = useState('');
 
   function handlePress() {
+    const { currentUser } = firebase.auth();
     const db = firebase.firestore();
-    const ref = db.collection('users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos');// user毎の情報を受け取れる
+    const ref = db.collection(`users/${currentUser.uid}/memos`);// user毎の情報を受け取れる
     ref.add({
       name,
       stockAmount,

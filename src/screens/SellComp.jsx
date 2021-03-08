@@ -20,8 +20,9 @@ export default function SellComp(props) {
   const [popula, setPopula] = useState(population.toString());
 
   function handlePressEdit() {
+    const { currentUser } = firebase.auth();
     const db = firebase.firestore();
-    const ref = db.collection('users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos').doc(id);
+    const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
     ref.set({
       name,
       stockAmount: Number(stockAm),
@@ -37,8 +38,9 @@ export default function SellComp(props) {
   }
 
   function deleteMemo() { // deleteの処理に変更
+    const { currentUser } = firebase.auth();
     const db = firebase.firestore();
-    const ref = db.collection('users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos').doc(id);
+    const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
     Alert.alert('すべて売却します', 'よろしいですか？', [
       {
         text: 'キャンセル',

@@ -14,11 +14,11 @@ export default function Main(props) {
   });
   }, []);
   useEffect(() => {
-    const currentUser = firebase.auth();
+    const { currentUser } = firebase.auth();
     const db = firebase.firestore();
     let unsubscribe = () => {};
     if (currentUser) {
-      const ref = db.collection('/users/f6fOE3CxiZSxzAbzL1awHgMnetI3/memos');
+      const ref = db.collection(`/users/${currentUser.uid}/memos`);
       // const ref = db.collection(`/users/${currentUser.uid}/memos`);
       unsubscribe = ref.onSnapshot((snapshot) => {
         const userMemos = [];
