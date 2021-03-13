@@ -66,26 +66,32 @@ export default function SellComp(props) {
           <View style={styles.title}>
             <Text style={styles.StockName}>{name}</Text>
           </View>
-          <TextInput
-            style={styles.inputText}
-            value={stockAm}
-            keyboardType="numeric"
-            placeholder="変更後の株数"
-            onChangeText={(text) => {
-              const elvalue = Number(text);
-              setStockAm(elvalue);
-            }}
-          />
-          <TextInput
-            style={styles.inputText}
-            value={popula}
-            keyboardType="numeric"
-            placeholder="変更後の売却額"
-            onChangeText={(text) => {
-              const value1 = Number(text);
-              setPopula(value1);
-            }}
-          />
+          <View style={styles.line}>
+            <Text style={styles.additional}>株数</Text>
+            <TextInput
+              style={styles.inputText}
+              value={stockAm}
+              keyboardType="numeric"
+              placeholder="変更後の株数"
+              onChangeText={(text) => {
+                const elvalue = Number(text);
+                setStockAm(elvalue);
+              }}
+            />
+          </View>
+          <View style={styles.line}>
+            <Text style={styles.additional}>¥</Text>
+            <TextInput
+              style={styles.inputText}
+              value={popula}
+              keyboardType="numeric"
+              placeholder="変更後の売却額"
+              onChangeText={(text) => {
+                const value1 = Number(text);
+                setPopula(value1);
+              }}
+            />
+          </View>
           <View>
             <CircleButton
               style={styles.fixButton}
@@ -146,16 +152,23 @@ const styles = StyleSheet.create({
   },
   fixButton: {
     position: 'absolute',
-    right: -100,
+    right: 0,
     bottom: -80,
-    width: '70%',
+    width: 80,
     paddingVertical: 24,
   },
   secButton: {
     position: 'absolute',
     right: 0,
     bottom: -150,
-    width: '100%',
+    width: 80,
     paddingVertical: 24,
+  },
+  additional: {
+    fontSize: 20,
+    paddingHorizontal: 16,
+  },
+  line: {
+    flexDirection: 'row',
   },
 });

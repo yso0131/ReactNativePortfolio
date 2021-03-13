@@ -27,6 +27,10 @@ export default function Sell() {
           }}
         >
           <Text style={styles.stockText} numberOfLines={1}>{item.name}</Text>
+          <Text numberOfLines={1}>
+            {item.population}
+            円
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -91,6 +95,7 @@ const styles = StyleSheet.create({
   },
   stockText: {
     fontSize: 32,
+    marginTop: 15,
   },
   titleText: {
     fontWeight: 'bold',

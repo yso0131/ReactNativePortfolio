@@ -5,6 +5,7 @@ import {
   View,
   Text,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 // import firebase from 'firebase';
 import { PieChart } from 'react-native-chart-kit';
@@ -27,15 +28,13 @@ const chartConfig = {
 export default function Chart(props) {
   const { memos } = props;
   const datas = memos;
-  // const hue = Math.round(Math.random() * 366);
   function ChangeColor() {
-    const hue = Math.round(Math.random() * 366);
+    const hue = Math.round(Math.random() * 255);
     const color = `hsla(${hue}, 100%, 50%, .5)`;
     return (
       color
     );
   }
-  // const color = `hsla(${hue}, 100%, 50%, .5)`;
   const data = datas.map((memo) => (
     {
       name: memo.name,
@@ -58,10 +57,12 @@ export default function Chart(props) {
     <View style={styles.container}>
       <View style={styles.appBar}>
         <View style={styles.appBarPrice}>
-          <Text style={styles.priceBar}>
-            {total.toString()}
-            円
-          </Text>
+          <TouchableOpacity onPress={() => { navigation.navigate('GetStock'); }}>
+            <Text style={styles.priceBar}>
+              {total.toString()}
+              円
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View>
